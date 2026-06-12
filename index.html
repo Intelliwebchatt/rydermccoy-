@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Warning — The Ryder McCoy Band | Free Album</title>
-<meta name="description" content="The Warning is a free album from The Ryder McCoy Band: Southern Gothic trap, outlaw country, swamp blues, and Alabama field-report storytelling." />
+<meta name="description" content="The Warning is a free album from The Ryder McCoy Band: outlaw country, swamp blues, Southern trap, and backroad Alabama songs with the dirt still on them." />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -74,9 +74,9 @@ const { useState, useEffect, useRef } = React;
 const BRAND = {
   name: 'The Ryder McCoy Band',
   album: 'The Warning',
-  tagline: 'Outlaw country, swamp blues, and slow-rolling Southern trap. Backroad songs written like they happened. Because some of them did.',
+  tagline: 'No Nashville shine. No cleaned-up confession. Just outlaw country, swamp blues, and slow trap drums from the backroads where the stories still have dirt under their nails.',
   sub: 'Slapout, Alabama · Biloxi Blues Records',
-  location: 'Slapout, Montgomery, Wetumpka, Deatsville — recorded where the porch lights hum and the road runs out.',
+  location: 'Slapout to Montgomery. Wetumpka to Deatsville. Songs from the places people drive through fast and talk about later.',
 };
 
 const NAV = [
@@ -105,17 +105,17 @@ const TRACKS = [
 ];
 
 const PEOPLE = [
-  { name:'Ryder McCoy', role:'Vocals · Guitar · Songwriter', text:"Came from the mud, left long enough to see the pattern, came back because it's still home. He does not preach. He reports." },
-  { name:'Jessie James Jenkins', role:'Vocals', text:"The blade in the middle of the noise. She sings the part Ryder will not say out loud, and the room gets smaller every time." },
-  { name:'Unc', role:"Vocals · Whatever's handy", text:"Says things that sound crazy until the night proves him close enough. Do not ask. He has already told you." },
+  { name:'Ryder McCoy', role:'Vocals · Guitar · Songwriter', text:"Ryder writes from the ditch side of the road. He is not trying to sound cleaned up, saved, or radio-ready. The songs come out low, plain, and bruised, like somebody telling the truth before daylight talks him out of it." },
+  { name:'Jessie James Jenkins', role:'Vocals', text:"Jessie carries the smoke in the room. She brings the church weight, the hurt, and the part of the song that still wants to live. When she comes in, it stops being a story and starts sounding like somebody's name." },
+  { name:'Unc', role:'Vocals · Spoken Word · Backroad Noise', text:"Unc is the old voice on the porch, half warning and half dare. He says the ugly part out loud, laughs when he should not, and reminds everybody that the road always collects what it is owed." },
 ];
 
 const RECKONINGS = [
-  'We’re not entertainers. We’re reporters from the brink.',
+  'This is not Nashville polish. This is red clay on the floorboard.',
+  'For the ones who miss when the pain still had dirt on it.',
   'If you do not know the people in these songs, you know people like them.',
-  'Around Slapout, losing somebody does not always mean they died.',
-  'Some folks don’t get high to see heaven. They get high because regular earth keeps showing its teeth.',
-  'There will always be a last bowl.',
+  'Some folks don’t get high to see heaven. They get high because earth keeps showing its teeth.',
+  'No fake saints. No clean endings. Just the song and what it cost.',
 ];
 
 function App() {
@@ -280,7 +280,7 @@ function App() {
           <div className="mt-7 grid lg:grid-cols-[1fr_360px] gap-6 lg:gap-8 items-start">
             <div>
               <p className="text-altar/85 leading-loose text-lg">
-                {TRACKS.length} tracks. Stream any song free. Tap the arrow beside a song to download that track. No email, no signup, no catch.
+                {TRACKS.length} tracks. Stream them free. No email gate. No fake fan-club signup. Tap the arrow beside a song and it is yours.
               </p>
 
               <div className="mt-7 flex flex-col sm:flex-row gap-3">
@@ -339,9 +339,9 @@ function App() {
         <div className="max-w-5xl mx-auto px-5 sm:px-8">
           <SectionLabel eyebrow="The Story" title="OUT OF SLAPOUT" />
           <div className="mt-8 space-y-6 text-altar/82 leading-loose text-lg">
-            <p>The Ryder McCoy Band comes out of Slapout, Alabama — the stretch of red dirt and river road between Holtville and Montgomery. The sound sits somewhere between outlaw country, swamp blues, Southern rock, and slow-rolling trap.</p>
-            <p>The songs come from real-feeling places: Waffle House booths, boat ramps, county roads, motel parking lots, and nights that did not go the way anybody planned.</p>
-            <p>Ryder writes them like he saw them. <em>The Warning</em> is the first full record, cut for Biloxi Blues Records and given away free because the people these songs are about should not have to pay to hear them.</p>
+            <p>The Ryder McCoy Band comes out of Slapout, Alabama — not the postcard version of the South, the other one. Red dirt. River bridges. Trailer lights. Gas stations where somebody is always waiting on somebody who is already late.</p>
+            <p>The sound is outlaw country with its teeth still in, swamp blues with an 808 under it, and Southern rock dragged through a motel parking lot. It is for the people who miss when country rap sounded like trouble instead of a brand meeting.</p>
+            <p><em>The Warning</em> is the first full record from Biloxi Blues Records. It is free because these songs are not dressed up for a market. They are for the folks who have lived close enough to the edge to recognize the view.</p>
           </div>
           <div className="mt-10 rounded-xl overflow-hidden border border-clay/35 shadow-soft grain relative">
             <img src="https://image.qwenlm.ai/public_source/134da842-7df6-448d-8417-c95c0e16e5fa/1d99b6500-5fe6-4e36-b294-b29896088f83.png" alt="Ryder McCoy Southern Gothic field report artwork" className="w-full h-auto opacity-85" />
@@ -368,7 +368,7 @@ function App() {
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
           <p className="uppercase tracking-[0.30em] text-ember text-xs mb-4">Booking & Press</p>
           <h2 className="font-blackletter text-5xl sm:text-6xl text-altar">GET IN TOUCH</h2>
-          <p className="mt-6 text-altar/78 leading-relaxed text-lg">Shows, press, licensing, or anything else — reach the label directly.</p>
+          <p className="mt-6 text-altar/78 leading-relaxed text-lg">Shows, press, licensing, strange questions, or road business — send it to the label.</p>
           <a href="mailto:biloxibluesrecords@gmail.com" className="mt-8 inline-block px-8 py-4 border border-ember text-altar uppercase tracking-[0.16em] text-sm hover:bg-ember hover:text-night transition-all">Email Biloxi Blues Records</a>
         </div>
       </section>
@@ -376,7 +376,7 @@ function App() {
       <footer className="border-t border-clay/35 py-10 text-center text-clay text-sm">
         <div className="font-blackletter text-2xl text-altar mb-3">Biloxi Blues Records</div>
         <p>The Ryder McCoy Band · Slapout, Alabama</p>
-        <p className="mt-4 text-clay/75">© {new Date().getFullYear()} Biloxi Blues Records. The album is free to download and share for personal listening. Backroads know.</p>
+        <p className="mt-4 text-clay/75">© {new Date().getFullYear()} Biloxi Blues Records. Free to download. Free to share for personal listening. No fake saints. No clean endings. Backroads know.</p>
       </footer>
 
       {playerOpen && (
