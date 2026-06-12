@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ryder McCoy — THE WARNING</title>
+<title>The Warning — The Ryder McCoy Band | Free Album</title>
+<meta name="description" content="The Warning is a free album from The Ryder McCoy Band: Southern Gothic trap, outlaw country, swamp blues, and Alabama field-report storytelling." />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -19,15 +20,19 @@
         colors: {
           swamp: '#0D110E',
           altar: '#EAE5DA',
-          sinner: '#6B1111',
-          clay: '#8C7B6B',
+          sinner: '#8F1717',
+          blood: '#B91C1C',
+          clay: '#A39181',
+          ember: '#F4B06A',
+          night: '#050605',
         },
         fontFamily: {
           blackletter: ['"Pirata One"', 'serif'],
           type: ['"Special Elite"', '"Courier New"', 'monospace'],
         },
         boxShadow: {
-          glow: '0 0 24px rgba(107,17,17,0.35), 0 0 60px rgba(13,17,14,0.8)',
+          glow: '0 0 24px rgba(185,28,28,0.35), 0 0 60px rgba(13,17,14,0.8)',
+          ember: '0 0 18px rgba(244,176,106,0.28)',
           soft: '0 4px 30px rgba(0,0,0,0.6)',
         }
       }
@@ -36,6 +41,7 @@
 </script>
 
 <style>
+  html { scroll-behavior: smooth; background:#0D110E; }
   html, body { background:#0D110E; color:#EAE5DA; }
   body { font-family: 'Special Elite','Courier New',monospace; }
   .grain::before {
@@ -44,14 +50,18 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.92  0 0 0 0 0.9  0 0 0 0 0.85  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     mix-blend-mode: overlay;
     pointer-events:none;
-    opacity:.35;
+    opacity:.30;
   }
   .vignette::after{
     content:""; position:absolute; inset:0; pointer-events:none;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+    background: radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,0.86) 100%);
   }
   @keyframes pulse-slow { 0%,100%{opacity:.4} 50%{opacity:1} }
   .pulse-slow{ animation: pulse-slow 3s ease-in-out infinite; }
+  .track-row:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid #F4B06A;
+    outline-offset: 3px;
+  }
   audio { filter: sepia(25%) saturate(70%) contrast(110%); }
 </style>
 </head>
@@ -59,20 +69,23 @@
 <div id="root"></div>
 
 <script type="text/babel" data-presets="react">
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 
 const BRAND = {
-  name: 'Ryder McCoy',
-  tagline: "We’re not entertainers. We’re reporters from the brink.",
-  sub: 'Southern Gothic Trap · Backroad Gospel · Alabama Field Reports',
+  name: 'The Ryder McCoy Band',
+  album: 'The Warning',
+  tagline: 'Outlaw country, swamp blues, and slow-rolling Southern trap. Backroad songs written like they happened. Because some of them did.',
+  sub: 'Slapout, Alabama · Biloxi Blues Records',
   location: 'Slapout, Montgomery, Wetumpka, Deatsville — recorded where the porch lights hum and the road runs out.',
 };
 
+const ALBUM_ZIP = 'downloads/the-warning-full-album.zip';
+
 const NAV = [
-  { id: 'story', label: 'The Story' },
-  { id: 'catalog', label: 'The Warning' },
-  { id: 'player', label: 'Player' },
-  { id: 'field-reports', label: 'Field Reports' },
+  { id: 'catalog', label: 'Listen' },
+  { id: 'story', label: 'Story' },
+  { id: 'band', label: 'Band' },
+  { id: 'contact', label: 'Contact' },
 ];
 
 const TRACKS = [
@@ -93,27 +106,10 @@ const TRACKS = [
   { no:'15', title:'The Last Bowl', audio:'audio/15-the-last-bowl.mp3', vibe:'3 a.m. porch gospel closer', key:'Em', characters:'Ryder, Jessie, Unc, daddy’s ghost, the daughter', duration:'4:34', note:'The closing report from the edge of the pipe: one bowl left, rain on tin, daddy’s ghost in the mirror, and a daughter disappearing in the flame. It does not offer rescue. It waits until the glass burns down and shows Ryder who he has really been praying to.', quote:'There will always be a last bowl.' },
 ];
 
-const LAYERS = [
-  { key:'mud', title:'MUD', subtitle:'Place, pressure, and weather', body:'Red clay roads, trailer skirting, gas pumps ticking after midnight, wet boots by the door, and rusted trucks parked under pine trees. Mud is the real place before the symbols start talking.' },
-  { key:'blood', title:'BLOOD', subtitle:'People, damage, and survival', body:'Addiction, family wounds, county jail rumors, motel arguments, burned-out deputies, ex-preachers, drifters, and people still laughing while the room falls apart.' },
-  { key:'flood', title:'FLOOD', subtitle:'Distortion, prophecy, and consequence', body:'Sleepless nights, drug heat, old sermons, and bad choices speaking the same language. Not clean redemption. Just judgment leaking through ordinary things.' },
-];
-
 const PEOPLE = [
-  { name:'Ryder McCoy', role:'The Witness', text:'Low voice, sharp eyes, no clean hero angle. Ryder moves through the stories, reports them, and sometimes admits he belongs there too.' },
-  { name:'Jessie James Jenkins', role:'The Lament', text:'The cracked gospel-soul voice carrying the choruses. Jessie turns damage into melody without pretending the damage is gone.' },
-  { name:'Unc', role:'The Warning Voice', text:'Old road wisdom, bad jokes, and truths nobody asked for. Unc speaks like a man who has seen every version of the same mistake.' },
-  { name:'Tommy “Two-Fang”', role:'The Backyard Philosopher', text:'Slapout’s local thinker in the smoke. He quotes Milton, talks consciousness, prison, temptation, and the fall of man like it happened off Lightwood Road.' },
-  { name:'Wanda', role:'The Glitter Gatekeeper', text:'Sequins, bad makeup, oil-stained pavement, and temporary escape. Wanda knows glitter saves some nights and cuts people in two on others.' },
-];
-
-const ALTERNATES = [
-  { title:'Where the Serpent Goes', role:'I-65 truck-stop gospel', note:'A field report from a wet truck stop, an ice machine, an old lottery preacher, and Room Twelve flickering like judgment time.' },
-  { title:'Drip Dripping', role:'Motel paranoia countdown', note:'A red-light motel track where a late plug, a dead phone, a cracked mirror, and a dripping sink turn one cheap room into a countdown.' },
-  { title:'Through the Glitter', role:'Wanda’s backroad escape hymn', note:'A County 11 track about red sequins, oil-stained pavement, and the glitter people walk through when the plain truth hurts too much.' },
-  { title:'Jenny in the Porch Light', role:'Slapout memory fracture', note:'A humid single-wide memory built around Jenny, a bug zapper, a silver chain, and a night Ryder cannot fully put back together.' },
-  { title:'Slap Out Rules', role:'Running-on-fumes backroad gospel', note:'A Slapout double-meaning track about being out of gas, out of cash, out of sleep, and still chasing one more answer from the road.' },
-  { title:'First It Gives You Wings', role:'Meth-life anatomy warning', note:'A cold explanation of how the first high becomes a sky that never comes back.' },
+  { name:'Ryder McCoy', role:'Vocals · Guitar · Songwriter', text:"Came from the mud, left long enough to see the pattern, came back because it's still home. He does not preach. He reports." },
+  { name:'Jessie James Jenkins', role:'Vocals', text:"The blade in the middle of the noise. She sings the part Ryder will not say out loud, and the room gets smaller every time." },
+  { name:'Unc', role:"Vocals · Whatever's handy", text:"Says things that sound crazy until the night proves him close enough. Do not ask. He has already told you." },
 ];
 
 const RECKONINGS = [
@@ -128,6 +124,10 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [reckoning, setReckoning] = useState(RECKONINGS[0]);
   const [nowPlaying, setNowPlaying] = useState(TRACKS[0]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(false);
+  const [playerOpen, setPlayerOpen] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -136,22 +136,116 @@ function App() {
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.load();
+
+    if (autoPlay) {
+      const playPromise = audio.play();
+      if (playPromise && playPromise.then) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+      } else {
+        setIsPlaying(true);
+      }
+    }
+  }, [nowPlaying]);
+
   const scrollTo = (id) => {
     setMenuOpen(false);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const trackIndex = TRACKS.findIndex(t => t.no === nowPlaying.no);
+
+  const playTrack = (track) => {
+    setPlayerOpen(true);
+    setAutoPlay(true);
+
+    if (track.no === nowPlaying.no) {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.play()
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+      }
+      return;
+    }
+
+    setNowPlaying(track);
+  };
+
+  const playFullAlbum = () => {
+    setPlayerOpen(true);
+    setAutoPlay(true);
+    setNowPlaying(TRACKS[0]);
+
+    setTimeout(() => {
+      const audio = audioRef.current;
+      if (audio) {
+        audio.play()
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+      }
+    }, 50);
+  };
+
+  const togglePlayback = () => {
+    setPlayerOpen(true);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      setAutoPlay(true);
+      audio.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const playNext = () => {
+    const next = TRACKS[trackIndex + 1];
+    if (next) {
+      setAutoPlay(true);
+      setNowPlaying(next);
+    } else {
+      setIsPlaying(false);
+      setAutoPlay(false);
+    }
+  };
+
+  const playPrevious = () => {
+    const previous = TRACKS[trackIndex - 1] || TRACKS[0];
+    setAutoPlay(true);
+    setNowPlaying(previous);
+  };
+
   return (
-    <div className="min-h-screen bg-swamp text-altar font-type antialiased relative overflow-x-hidden">
-      <nav className="sticky top-0 z-50 bg-swamp/85 backdrop-blur border-b border-clay/40">
+    <div className="min-h-screen bg-swamp text-altar font-type antialiased relative overflow-x-hidden pb-32">
+      <audio
+        ref={audioRef}
+        src={nowPlaying.audio}
+        preload="metadata"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={playNext}
+      />
+
+      <nav className="sticky top-0 z-50 bg-night/90 backdrop-blur border-b border-clay/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button onClick={() => scrollTo('hero')} className="flex items-center gap-3 group">
             <span className="w-9 h-9 rounded-full bg-sinner flex items-center justify-center font-blackletter text-xl text-altar shadow-glow">R</span>
-            <span className="font-blackletter text-xl sm:text-2xl tracking-wider text-altar group-hover:text-sinner transition-colors">Ryder McCoy</span>
+            <span className="font-blackletter text-xl sm:text-2xl tracking-wider text-altar group-hover:text-ember transition-colors">Ryder McCoy</span>
           </button>
           <ul className="hidden md:flex items-center gap-8 text-sm uppercase tracking-[0.2em]">
-            {NAV.map(n => <li key={n.id}><button onClick={() => scrollTo(n.id)} className="hover:text-sinner transition-colors border-b border-transparent hover:border-sinner pb-1">{n.label}</button></li>)}
+            {NAV.map(n => <li key={n.id}><button onClick={() => scrollTo(n.id)} className="hover:text-ember transition-colors border-b border-transparent hover:border-ember pb-1">{n.label}</button></li>)}
           </ul>
           <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" aria-label="Menu">
             <span className={`w-6 h-0.5 bg-altar transition ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
@@ -159,116 +253,163 @@ function App() {
             <span className={`w-6 h-0.5 bg-altar transition ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
           </button>
         </div>
-        {menuOpen && <div className="md:hidden border-t border-clay/40 bg-swamp"><ul className="px-6 py-4 space-y-4 text-sm uppercase tracking-[0.2em]">{NAV.map(n => <li key={n.id}><button onClick={() => scrollTo(n.id)} className="block w-full text-left hover:text-sinner">{n.label}</button></li>)}</ul></div>}
+        {menuOpen && <div className="md:hidden border-t border-clay/40 bg-night"><ul className="px-6 py-4 space-y-4 text-sm uppercase tracking-[0.2em]">{NAV.map(n => <li key={n.id}><button onClick={() => scrollTo(n.id)} className="block w-full text-left hover:text-ember">{n.label}</button></li>)}</ul></div>}
       </nav>
 
-      <section id="hero" className="relative grain vignette min-h-[92vh] flex items-end overflow-hidden">
-        <img src="https://image.qwenlm.ai/public_source/134da842-7df6-448d-8417-c95c0e16e5fa/1d99b6500-5fe6-4e36-b294-b29896088f83.png" alt="Ryder McCoy in the swamp" className="absolute inset-0 w-full h-full object-cover opacity-70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-swamp via-swamp/50 to-transparent"></div>
-        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 pb-20 pt-32 w-full">
-          <p className="uppercase tracking-[0.4em] text-clay text-xs sm:text-sm mb-4">◆ {BRAND.sub} ◆</p>
-          <h1 className="font-blackletter text-6xl sm:text-8xl lg:text-9xl leading-[0.95] text-altar drop-shadow-[0_0_30px_rgba(107,17,17,0.5)]">Ryder<br/>McCoy</h1>
-          <p className="mt-6 max-w-2xl text-base sm:text-lg text-altar/85 leading-relaxed">
-            {BRAND.tagline} A Southern Gothic trap record from Alabama backroads, motel rooms, truck stops, trailer parks, river bridges, and people standing too close to the edge. {BRAND.location}
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <button onClick={() => scrollTo('player')} className="px-7 py-3 bg-sinner text-altar font-type uppercase tracking-[0.2em] text-sm rounded shadow-glow hover:bg-altar hover:text-sinner transition-all">▶ Play THE WARNING</button>
-            <button onClick={() => scrollTo('story')} className="px-7 py-3 border border-clay text-altar uppercase tracking-[0.2em] text-sm rounded hover:border-altar transition-all">Read the Story</button>
+      <section id="hero" className="relative grain vignette min-h-[82vh] sm:min-h-[88vh] flex items-end overflow-hidden">
+        <img src="assets/hero-band.jpg" alt="The Ryder McCoy Band" className="absolute inset-0 w-full h-full object-cover opacity-72" />
+        <div className="absolute inset-0 bg-gradient-to-t from-swamp via-swamp/55 to-black/15"></div>
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 pb-12 sm:pb-20 pt-28 w-full">
+          <p className="uppercase tracking-[0.35em] text-ember text-xs sm:text-sm mb-3">{BRAND.sub}</p>
+          <h1 className="font-blackletter text-6xl sm:text-8xl lg:text-9xl leading-[0.9] text-altar drop-shadow-[0_0_30px_rgba(185,28,28,0.5)]">THE<br/>WARNING</h1>
+          <p className="mt-3 text-ember uppercase tracking-[0.28em] text-xs sm:text-sm">A free album from The Ryder McCoy Band</p>
+          <p className="mt-6 max-w-2xl text-base sm:text-lg text-altar/88 leading-relaxed">{BRAND.tagline}</p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <button onClick={playFullAlbum} className="px-7 py-4 bg-blood text-altar font-type uppercase tracking-[0.18em] text-sm rounded shadow-glow hover:bg-altar hover:text-sinner transition-all">▶ Play Full Album</button>
+            <button onClick={() => scrollTo('catalog')} className="px-7 py-4 border border-ember/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar hover:text-ember transition-all">Tracklist</button>
+            <a href={ALBUM_ZIP} download className="px-7 py-4 border border-clay/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar hover:text-ember transition-all text-center">Download ZIP</a>
           </div>
-          <div className="mt-14 border-t border-clay/40 pt-4 text-clay text-xs uppercase tracking-[0.3em]"><span className="inline-block w-2 h-2 bg-sinner rounded-full mr-2 pulse-slow align-middle"></span>Biloxi Blues transmission — {reckoning}</div>
-        </div>
-      </section>
-
-      <section id="story" className="relative py-24 sm:py-32">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
-          <SectionLabel num="01" title="The Story" />
-          <div className="mt-10 grid md:grid-cols-5 gap-10 items-start">
-            <div className="md:col-span-2"><div className="aspect-[3/4] rounded-lg overflow-hidden border border-clay/40 shadow-soft relative grain"><img src="https://image.qwenlm.ai/public_source/134da842-7df6-448d-8417-c95c0e16e5fa/1d99b6500-5fe6-4e36-b294-b29896088f83.png" alt="Ryder portrait" className="w-full h-full object-cover opacity-85" /><div className="absolute bottom-3 left-3 text-xs uppercase tracking-[0.25em] text-altar bg-swamp/70 px-2 py-1 rounded">File No. 11 — R.M.</div></div></div>
-            <div className="md:col-span-3 space-y-5 text-altar/85 leading-loose">
-              <p><span className="text-sinner font-bold">FIELD REPORT:</span> Ryder McCoy came out of the dark stretch between Slapout and Montgomery with songs that sounded less like entertainment and more like evidence.</p>
-              <p>Some say it is a band. Some say it is one man with witnesses. Some say it is just what happens when the same stories keep showing up at every gas station after midnight.</p>
-              <p>Ryder gives the verses low and measured. Jessie carries the hooks like a church voice with smoke in it. Unc comes through as the old survivor, laughing at the wrong time because he has seen too much.</p>
-              <p className="border-l-2 border-sinner pl-4 italic text-altar">“If you do not know the people in these songs, you know people like them.”</p>
-            </div>
+          <div className="mt-10 border-t border-clay/40 pt-4 text-clay text-xs uppercase tracking-[0.25em] leading-relaxed">
+            <span className="inline-block w-2 h-2 bg-blood rounded-full mr-2 pulse-slow align-middle"></span>
+            Biloxi Blues transmission — {reckoning}
           </div>
         </div>
       </section>
 
-      <section className="relative py-24 sm:py-32 bg-gradient-to-b from-swamp to-swamp/80 border-y border-clay/30">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <SectionLabel num="02" title="The Three Layers" subtitle="Mud, Blood, Flood — the Ryder McCoy world map" />
-          <div className="mt-12 grid md:grid-cols-3 gap-6 lg:gap-8">
-            {LAYERS.map(layer => <article key={layer.key} className="rounded-xl border border-clay/40 bg-swamp shadow-soft hover:shadow-glow transition-all duration-500 p-6"><p className="text-clay text-xs uppercase tracking-[0.3em]">Layer / {layer.key}</p><h3 className="font-blackletter text-5xl text-altar mt-2">{layer.title}</h3><p className="mt-1 text-clay text-xs uppercase tracking-[0.3em]">{layer.subtitle}</p><p className="mt-4 text-altar/80 leading-relaxed text-sm">{layer.body}</p></article>)}
-          </div>
-        </div>
-      </section>
+      <section id="catalog" className="relative py-16 sm:py-24">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+          <SectionLabel eyebrow="The Album" title="THE WARNING" />
+          <div className="mt-7 grid lg:grid-cols-[1fr_360px] gap-6 lg:gap-8 items-start">
+            <div>
+              <p className="text-altar/85 leading-loose text-lg">
+                {TRACKS.length} tracks. Stream any song free. Tap the arrow to download it. Or take the whole album home in one ZIP.
+              </p>
 
-      <section className="relative py-24 sm:py-32 border-b border-clay/30">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <SectionLabel num="03" title="People in the Songs" subtitle="Recurring voices, county names, and half-remembered warnings" />
-          <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-5 gap-5">
-            {PEOPLE.map(p => <article key={p.name} className="rounded-xl border border-clay/40 bg-swamp p-5 shadow-soft hover:border-sinner transition-all"><p className="text-clay text-xs uppercase tracking-[0.25em]">{p.role}</p><h3 className="font-blackletter text-3xl text-altar mt-2">{p.name}</h3><p className="mt-3 text-altar/80 text-sm leading-relaxed">{p.text}</p></article>)}
-          </div>
-        </div>
-      </section>
+              <div className="mt-7 flex flex-col sm:flex-row gap-3">
+                <button onClick={playFullAlbum} className="px-6 py-4 bg-blood text-altar uppercase tracking-[0.18em] text-sm rounded shadow-glow hover:bg-altar hover:text-sinner transition-all">▶ Play Full Album</button>
+                <a href={ALBUM_ZIP} download className="px-6 py-4 border border-ember/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar transition-all text-center">Download Full Album (.ZIP)</a>
+              </div>
 
-      <section id="catalog" className="relative py-24 sm:py-32">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <SectionLabel num="04" title="The Warning" subtitle="Biloxi Blues Records — 15-track working album" />
-          <div className="mt-10 rounded-2xl border border-sinner/50 bg-swamp/70 shadow-glow p-6 sm:p-8 relative grain overflow-hidden">
-            <div className="text-clay text-xs uppercase tracking-[0.3em]">Biloxi Blues Records presents</div>
-            <h3 className="font-blackletter text-5xl sm:text-7xl text-altar mt-3">THE WARNING</h3>
-            <p className="mt-4 max-w-3xl text-altar/85 leading-loose">Fifteen field reports from the edge of rural Alabama, cut from storm noise, gospel damage, backroad trap drums, motel light, county jail language, porch talk, and people standing close enough to the fire to describe the heat.</p>
-            <p className="mt-4 text-sinner italic text-lg">We’re not entertainers. We’re reporters from the brink.</p>
-          </div>
+              <div className="mt-8 rounded-xl border border-clay/35 overflow-hidden shadow-soft bg-[#15110f]">
+                <div className="grid grid-cols-[2.25rem_1fr_4.5rem_3rem_3rem] sm:grid-cols-[3rem_1fr_5rem_3.5rem_3.5rem] gap-2 bg-sinner/20 border-b border-clay/35 px-4 sm:px-6 py-4 text-xs uppercase tracking-[0.20em] text-clay items-center">
+                  <div>#</div>
+                  <div>Title</div>
+                  <div className="text-right">Len</div>
+                  <div className="text-center">Play</div>
+                  <div className="text-center">Get</div>
+                </div>
 
-          <div className="mt-10 rounded-xl border border-clay/40 overflow-hidden shadow-soft">
-            <div className="hidden md:grid grid-cols-12 gap-4 bg-sinner/20 border-b border-clay/40 px-6 py-3 text-xs uppercase tracking-[0.25em] text-clay"><div className="col-span-1">#</div><div className="col-span-3">Title</div><div className="col-span-3">Vibe</div><div className="col-span-3">Key Characters</div><div className="col-span-1">Key</div><div className="col-span-1 text-right">Len</div></div>
-            <div className="divide-y divide-clay/20">
-              {TRACKS.map(t => <button key={t.no} onClick={() => {setNowPlaying(t); setTimeout(() => scrollTo('player'), 50)}} className={`w-full grid grid-cols-12 gap-2 md:gap-4 px-4 md:px-6 py-4 text-left hover:bg-sinner/10 transition-colors items-center ${nowPlaying.no===t.no ? 'bg-sinner/15' : ''}`}><div className="col-span-2 md:col-span-1 text-clay text-sm">{t.no}</div><div className="col-span-10 md:col-span-3"><div className="text-altar font-bold tracking-wide">{t.title}</div><div className="md:hidden text-xs text-clay mt-1">{t.vibe}</div></div><div className="hidden md:block col-span-3 text-altar/75 text-sm">{t.vibe}</div><div className="hidden md:block col-span-3 text-altar/75 text-sm italic">{t.characters}</div><div className="hidden md:block col-span-1 text-clay text-sm font-mono">{t.key}</div><div className="hidden md:block col-span-1 text-right text-clay text-sm font-mono">{t.duration}</div><div className="col-span-12 md:hidden flex items-center justify-between text-xs text-clay pt-2 border-t border-clay/20 mt-2"><span className="italic">{t.characters}</span><span className="font-mono">{t.key} · {t.duration}</span></div></button>)}
-            </div>
-          </div>
-        </div>
-      </section>
+                <div className="divide-y divide-clay/20">
+                  {TRACKS.map(t => (
+                    <div key={t.no} className={`track-row grid grid-cols-[2.25rem_1fr_4.5rem_3rem_3rem] sm:grid-cols-[3rem_1fr_5rem_3.5rem_3.5rem] gap-2 px-4 sm:px-6 py-4 items-center transition-colors ${nowPlaying.no===t.no ? 'bg-sinner/18' : 'hover:bg-sinner/10'}`}>
+                      <button onClick={() => playTrack(t)} className="text-left text-clay text-sm">{t.no}</button>
+                      <button onClick={() => playTrack(t)} className="text-left min-w-0">
+                        <span className="block text-altar font-bold tracking-wide text-base sm:text-lg whitespace-normal break-words leading-snug">{t.title}</span>
+                        <span className="block text-xs text-clay mt-1 whitespace-normal break-words">{t.vibe}</span>
+                      </button>
+                      <div className="text-right text-clay text-sm font-mono">{t.duration}</div>
+                      <button onClick={() => playTrack(t)} aria-label={`Play ${t.title}`} className="h-11 w-11 border border-clay/35 rounded flex items-center justify-center hover:border-ember hover:text-ember transition-colors">{nowPlaying.no === t.no && isPlaying ? '❚❚' : '▶'}</button>
+                      <a onClick={(e) => e.stopPropagation()} href={t.audio} download aria-label={`Download ${t.title}`} className="h-11 w-11 border border-clay/35 rounded flex items-center justify-center hover:border-ember hover:text-ember transition-colors">⇩</a>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-      <section id="player" className="relative py-24 sm:py-32 border-y border-clay/30 bg-gradient-to-b from-swamp to-black/20">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
-          <SectionLabel num="05" title="Album Player" subtitle="Drop MP3s into /audio using the filenames shown in the code" />
-          <div className="mt-10 rounded-2xl border border-clay/40 bg-swamp shadow-glow p-6 sm:p-8">
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded bg-sinner flex items-center justify-center text-altar text-3xl font-blackletter shadow-glow shrink-0">♪</div>
-              <div className="flex-1 min-w-0">
-                <div className="text-xs uppercase tracking-[0.3em] text-clay">Now Spinning</div>
-                <h3 className="font-blackletter text-4xl sm:text-5xl text-altar mt-1">{nowPlaying.no}. {nowPlaying.title}</h3>
-                <p className="text-clay text-sm mt-1">{nowPlaying.vibe} · {nowPlaying.characters}</p>
-                <p className="mt-4 text-altar/80 leading-relaxed">{nowPlaying.note}</p>
-                <p className="mt-3 text-sinner italic">“{nowPlaying.quote}”</p>
-                <audio key={nowPlaying.audio} controls preload="metadata" className="w-full mt-6" src={nowPlaying.audio}>
-                  Your browser does not support the audio element.
-                </audio>
-                <p className="mt-3 text-xs text-clay leading-relaxed">Expected file path: <span className="text-altar">{nowPlaying.audio}</span></p>
+              <div className="mt-7 text-center">
+                <a href={ALBUM_ZIP} download className="inline-block w-full sm:w-auto px-8 py-4 bg-blood text-altar uppercase tracking-[0.18em] text-sm rounded shadow-glow hover:bg-altar hover:text-sinner transition-all">Download Full Album (.ZIP)</a>
+                <p className="mt-4 text-clay text-sm tracking-[0.15em]">MP3 · no email · no signup · no catch</p>
               </div>
             </div>
+
+            <aside className="rounded-2xl border border-clay/35 bg-swamp shadow-glow p-5 sm:p-6 sticky top-24">
+              <div className="text-xs uppercase tracking-[0.28em] text-ember">Now Playing</div>
+              <h3 className="font-blackletter text-4xl text-altar mt-2 leading-none">{nowPlaying.no}. {nowPlaying.title}</h3>
+              <p className="text-clay text-sm mt-2">{nowPlaying.vibe}</p>
+              <p className="mt-4 text-altar/78 leading-relaxed text-sm">{nowPlaying.note}</p>
+              <p className="mt-4 text-ember italic text-sm">“{nowPlaying.quote}”</p>
+              <div className="mt-5 flex items-center gap-3">
+                <button onClick={playPrevious} className="h-11 w-11 border border-clay/40 rounded hover:border-ember hover:text-ember transition-colors">⏮</button>
+                <button onClick={togglePlayback} className="h-12 flex-1 bg-blood rounded uppercase tracking-[0.16em] text-sm shadow-glow hover:bg-altar hover:text-sinner transition-all">{isPlaying ? 'Pause' : 'Play'}</button>
+                <button onClick={playNext} className="h-11 w-11 border border-clay/40 rounded hover:border-ember hover:text-ember transition-colors">⏭</button>
+              </div>
+              <a href={nowPlaying.audio} download className="mt-4 block text-center px-5 py-3 border border-clay/40 rounded uppercase tracking-[0.16em] text-xs hover:border-ember hover:text-ember transition-colors">Download This Track</a>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section id="field-reports" className="relative py-24 sm:py-32 border-y border-clay/30">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <SectionLabel num="06" title="Other Field Reports" subtitle="Songs still moving through the county rumor mill" />
-          <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {ALTERNATES.map(a => <article key={a.title} className="rounded-xl border border-clay/40 bg-swamp p-5 shadow-soft hover:border-sinner transition-all"><p className="text-clay text-xs uppercase tracking-[0.25em]">{a.role}</p><h3 className="font-blackletter text-4xl text-altar mt-2">{a.title}</h3><p className="mt-3 text-altar/80 text-sm leading-relaxed">{a.note}</p></article>)}
+      <section id="story" className="relative py-16 sm:py-24 border-y border-clay/25 bg-gradient-to-b from-swamp to-black/20">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8">
+          <SectionLabel eyebrow="The Story" title="OUT OF SLAPOUT" />
+          <div className="mt-8 space-y-6 text-altar/82 leading-loose text-lg">
+            <p>The Ryder McCoy Band comes out of Slapout, Alabama — the stretch of red dirt and river road between Holtville and Montgomery. The sound sits somewhere between outlaw country, swamp blues, Southern rock, and slow-rolling trap.</p>
+            <p>The songs come from real-feeling places: Waffle House booths, boat ramps, county roads, motel parking lots, and nights that did not go the way anybody planned.</p>
+            <p>Ryder writes them like he saw them. <em>The Warning</em> is the first full record, cut for Biloxi Blues Records and given away free because the people these songs are about should not have to pay to hear them.</p>
+          </div>
+          <div className="mt-10 rounded-xl overflow-hidden border border-clay/35 shadow-soft grain relative">
+            <img src="https://image.qwenlm.ai/public_source/134da842-7df6-448d-8417-c95c0e16e5fa/1d99b6500-5fe6-4e36-b294-b29896088f83.png" alt="Ryder McCoy Southern Gothic field report artwork" className="w-full h-auto opacity-85" />
           </div>
         </div>
       </section>
 
-      <footer className="border-t border-clay/40 py-10 text-center text-clay text-xs uppercase tracking-[0.3em]"><div className="font-blackletter text-2xl text-altar mb-3">Ryder McCoy</div><p>© {new Date().getFullYear()} — Biloxi Blues Records · Alabama Field Recordings</p><p className="mt-2 text-clay/70">No clean endings. No fake saints. No curtain call.</p></footer>
+      <section id="band" className="relative py-16 sm:py-24">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+          <SectionLabel eyebrow="The Band" title="THREE VOICES" />
+          <div className="mt-10 grid md:grid-cols-3 gap-5">
+            {PEOPLE.map(p => (
+              <article key={p.name} className="rounded-xl border border-clay/35 bg-[#15110f] p-6 shadow-soft hover:border-ember/70 transition-all">
+                <h3 className="font-blackletter text-4xl text-ember">{p.name}</h3>
+                <p className="mt-2 text-clay text-xs uppercase tracking-[0.25em]">{p.role}</p>
+                <p className="mt-5 text-altar/82 leading-relaxed">{p.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="relative py-20 sm:py-28 border-t border-clay/25 text-center">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8">
+          <p className="uppercase tracking-[0.30em] text-ember text-xs mb-4">Booking & Press</p>
+          <h2 className="font-blackletter text-5xl sm:text-6xl text-altar">GET IN TOUCH</h2>
+          <p className="mt-6 text-altar/78 leading-relaxed text-lg">Shows, press, licensing, or anything else — reach the label directly.</p>
+          <a href="mailto:biloxibluesrecords@gmail.com" className="mt-8 inline-block px-8 py-4 border border-ember text-altar uppercase tracking-[0.16em] text-sm hover:bg-ember hover:text-night transition-all">Email Biloxi Blues Records</a>
+        </div>
+      </section>
+
+      <footer className="border-t border-clay/35 py-10 text-center text-clay text-sm">
+        <div className="font-blackletter text-2xl text-altar mb-3">Biloxi Blues Records</div>
+        <p>The Ryder McCoy Band · Slapout, Alabama</p>
+        <p className="mt-4 text-clay/75">© {new Date().getFullYear()} Biloxi Blues Records. The album is free to download and share for personal listening. Backroads know.</p>
+      </footer>
+
+      {playerOpen && (
+        <div className="fixed left-0 right-0 bottom-0 z-[60] bg-night/96 backdrop-blur border-t border-ember/30 shadow-[0_-10px_35px_rgba(0,0,0,0.65)]">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex items-center gap-3">
+            <button onClick={() => setPlayerOpen(false)} className="hidden sm:flex h-9 w-9 items-center justify-center border border-clay/35 rounded text-clay hover:text-ember hover:border-ember">×</button>
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] uppercase tracking-[0.24em] text-ember">Now Playing</div>
+              <div className="text-altar font-bold truncate">{nowPlaying.no}. {nowPlaying.title}</div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button onClick={playPrevious} className="h-10 w-10 border border-clay/35 rounded hover:border-ember hover:text-ember">⏮</button>
+              <button onClick={togglePlayback} className="h-11 w-14 bg-blood rounded shadow-glow hover:bg-altar hover:text-sinner">{isPlaying ? '❚❚' : '▶'}</button>
+              <button onClick={playNext} className="h-10 w-10 border border-clay/35 rounded hover:border-ember hover:text-ember">⏭</button>
+              <a href={nowPlaying.audio} download className="hidden sm:flex h-10 w-10 border border-clay/35 rounded items-center justify-center hover:border-ember hover:text-ember">⇩</a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-function SectionLabel({ num, title, subtitle, center=false }) {
-  return <div className={`${center ? 'text-center' : ''}`}><div className="flex items-center gap-4 justify-center md:justify-start" style={{justifyContent: center ? 'center' : 'flex-start'}}><span className="text-sinner font-mono text-sm">/ {num}</span><span className="h-px flex-1 max-w-[40px] bg-clay"></span><span className="text-clay text-xs uppercase tracking-[0.3em]">Chapter</span></div><h2 className={`font-blackletter text-5xl sm:text-6xl lg:text-7xl text-altar mt-3 ${center ? 'text-center' : ''}`}>{title}</h2>{subtitle && <p className={`mt-3 text-clay text-sm uppercase tracking-[0.25em] ${center ? 'text-center' : ''}`}>{subtitle}</p>}</div>;
+function SectionLabel({ eyebrow, title }) {
+  return (
+    <div>
+      <p className="uppercase tracking-[0.30em] text-ember text-xs">{eyebrow}</p>
+      <h2 className="font-blackletter text-5xl sm:text-6xl lg:text-7xl text-altar mt-4 leading-none">{title}</h2>
+    </div>
+  );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
