@@ -79,8 +79,6 @@ const BRAND = {
   location: 'Slapout, Montgomery, Wetumpka, Deatsville — recorded where the porch lights hum and the road runs out.',
 };
 
-const ALBUM_ZIP = 'downloads/the-warning-full-album.zip';
-
 const NAV = [
   { id: 'catalog', label: 'Listen' },
   { id: 'story', label: 'Story' },
@@ -267,7 +265,7 @@ function App() {
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
             <button onClick={playFullAlbum} className="px-7 py-4 bg-blood text-altar font-type uppercase tracking-[0.18em] text-sm rounded shadow-glow hover:bg-altar hover:text-sinner transition-all">▶ Play Full Album</button>
             <button onClick={() => scrollTo('catalog')} className="px-7 py-4 border border-ember/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar hover:text-ember transition-all">Tracklist</button>
-            <a href={ALBUM_ZIP} download className="px-7 py-4 border border-clay/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar hover:text-ember transition-all text-center">Download ZIP</a>
+            <button onClick={() => scrollTo('catalog')} className="px-7 py-4 border border-clay/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar hover:text-ember transition-all">Download Tracks</button>
           </div>
           <div className="mt-10 border-t border-clay/40 pt-4 text-clay text-xs uppercase tracking-[0.25em] leading-relaxed">
             <span className="inline-block w-2 h-2 bg-blood rounded-full mr-2 pulse-slow align-middle"></span>
@@ -282,12 +280,12 @@ function App() {
           <div className="mt-7 grid lg:grid-cols-[1fr_360px] gap-6 lg:gap-8 items-start">
             <div>
               <p className="text-altar/85 leading-loose text-lg">
-                {TRACKS.length} tracks. Stream any song free. Tap the arrow to download it. Or take the whole album home in one ZIP.
+                {TRACKS.length} tracks. Stream any song free. Tap the arrow beside a song to download that track. No email, no signup, no catch.
               </p>
 
               <div className="mt-7 flex flex-col sm:flex-row gap-3">
                 <button onClick={playFullAlbum} className="px-6 py-4 bg-blood text-altar uppercase tracking-[0.18em] text-sm rounded shadow-glow hover:bg-altar hover:text-sinner transition-all">▶ Play Full Album</button>
-                <a href={ALBUM_ZIP} download className="px-6 py-4 border border-ember/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar transition-all text-center">Download Full Album (.ZIP)</a>
+                <button onClick={() => scrollTo('catalog')} className="px-6 py-4 border border-ember/70 text-altar uppercase tracking-[0.18em] text-sm rounded hover:border-altar transition-all text-center">Download Tracks Below</button>
               </div>
 
               <div className="mt-8 rounded-xl border border-clay/35 overflow-hidden shadow-soft bg-[#15110f]">
@@ -316,8 +314,7 @@ function App() {
               </div>
 
               <div className="mt-7 text-center">
-                <a href={ALBUM_ZIP} download className="inline-block w-full sm:w-auto px-8 py-4 bg-blood text-altar uppercase tracking-[0.18em] text-sm rounded shadow-glow hover:bg-altar hover:text-sinner transition-all">Download Full Album (.ZIP)</a>
-                <p className="mt-4 text-clay text-sm tracking-[0.15em]">MP3 · no email · no signup · no catch</p>
+                <p className="mt-4 text-clay text-sm tracking-[0.15em]">Each track downloads free · MP3 · no email · no signup · no catch</p>
               </div>
             </div>
 
